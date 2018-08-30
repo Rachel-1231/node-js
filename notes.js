@@ -8,13 +8,38 @@ module.exports.addNote = () =>{
 module.exports.add = (a,b) =>{
   return a+b;
 }; */
+const fs = require('fs');
 
 console.log('Starting nodes.js');
 
-var addNote = (title, body) => {
-console.log('Adding notes', title,body)
+var fetchNotes = () => {
+  try{
+    var notesString = fs.readFileSync('notes-data.json');
+    return JSON.parse(notesString);
+  }catch (e){
+
+  }
+
+};
+var saveNotes = (notes) => {
+  fs.writeFileSync('notes-data.json', JSON.stringify(notes));
 };
 
+var addNote = (title, body) => {
+  var notes = []
+  var note = {
+    title,
+    body
+  };
+
+var duplicateNotes = notes.filter((note)=> note.title === title);
+if (duplicateNotes.length === 0){
+notes.push(note);
+saveNotes(note);
+
+
+};
+};
 var getAll = () =>{
   console.log("Getting All notes");
 };
